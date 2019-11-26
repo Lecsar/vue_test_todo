@@ -7,5 +7,6 @@ function resolve(dir) {
 module.exports = {
   chainWebpack: config => {
     config.resolve.alias.set("TodoList", resolve("src/views/TodoList"));
+    config.resolve.alias.set("Login", resolve("src/views/Login"));
   }
 };
