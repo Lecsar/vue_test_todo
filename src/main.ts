@@ -2,8 +2,8 @@ import Vue from "vue";
 import { Checkbox, Input, Button } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import { router } from "./router";
+import { store } from "./store";
 
 Vue.component(Button.name, Button);
 Vue.component(Input.name, Input);
