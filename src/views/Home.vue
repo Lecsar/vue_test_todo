@@ -29,7 +29,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import AddInput from "@/components/AddInput.vue";
+import AddInput from "@/components/AddInput";
 import Todo from "@/components/Todo";
 import Filters from "@/components/Filters";
 import { ActiveFilterName } from "@/store";
