@@ -15,9 +15,8 @@
       "webpack-env"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "TodoList/*": ["src/views/TodoList/*"]
     },
     "lib": [
       "esnext",

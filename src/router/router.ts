@@ -1,14 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import TodoList from "TodoList/containers/TodoList.vue";
 
 Vue.use(VueRouter);
 
+export const TODO_LIST_PAGE_URL = "/";
+export const LOGIN_PAGE_URL = "/login";
+
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: Home
+    path: TODO_LIST_PAGE_URL,
+    name: "todolist",
+    component: TodoList
   }
 ];
 

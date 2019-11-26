@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Vue logo" src="@/assets/logo.png" />
     <AddInput
       :hasTodos="hasTodos"
       :checkedAll="checkedAll"
@@ -22,20 +22,22 @@
     <Filters
       v-if="hasTodos"
       :activeFilter="activeFilter"
-      @:setFilter="setActiveFilter"
+      @setFilter="setActiveFilter"
     />
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import AddInput from "@/components/AddInput";
-import Todo from "@/components/Todo";
-import Filters from "@/components/Filters";
-import { ActiveFilterName } from "@/store";
+import { createNamespacedHelpers } from "vuex";
+import AddInput from "../components/AddInput";
+import Todo from "../components/Todo";
+import Filters from "../components/Filters";
+import { ActiveFilterName } from "@/types";
+
+const { mapState, mapActions } = createNamespacedHelpers("todoList");
 
 export default {
-  name: "home",
+  name: "todolist",
   components: {
     AddInput,
     Todo,
