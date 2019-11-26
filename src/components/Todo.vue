@@ -1,12 +1,23 @@
 <template>
   <div class="todo-wrapper">
-    <a-checkbox
-      class="checkbox"
-      v-on:change="toggleTodo(id)"
-      v-bind:checked="checked"
+    <a-input
+      class="editingInput"
+      ref="editingInput"
+      v-if="isEditedTodo"
+      :defaultValue="text"
+      @blur="throwOffTodoId"
+      @keydown.esc="throwOffTodoId"
+      @keydown.enter="$event => editTodoText($event.target.value)"
     />
-    <h3 class="text">{{ text }}</h3>
-    <a-button class="clearBtn" v-on:click="deleteTodo(id)">&#10008;</a-button>
+    <div class="todo" v-else>
+      <a-checkbox
+        class="checkbox"
+        :checked="checked"
+        @change="toggleTodo(id)"
+      />
+      <h3 class="text" @dblclick="setEditedTodoId(id)">{{ text }}</h3>
+      <a-button class="clearBtn" @click="deleteTodo(id)">&#10008;</a-button>
+    </div>
   </div>
 </template>
 
@@ -18,9 +29,31 @@ export default class Todo extends Vue {
   @Prop() private id!: number;
   @Prop() private text!: string;
   @Prop() private checked!: boolean;
+  @Prop() private isEditedTodo!: boolean;
+
+  updated() {
+    if (this.isEditedTodo) {
+      (this.$refs.editingInput as any).focus();
+    }
+  }
 
   toggleTodo(todoId: number) {
     this.$emit("toggleTodo", todoId);
+  }
+
+  editTodoText(text: string) {
+    this.$emit("editTodoText", { todoId: this.id, text });
+    this.throwOffTodoId();
+  }
+
+  setEditedTodoId(todoId: number | null) {
+    this.$emit("setEditedTodoId", todoId);
+  }
+
+  throwOffTodoId() {
+    if (this.isEditedTodo) {
+      this.setEditedTodoId(null);
+    }
   }
 
   deleteTodo(todoId: number) {
@@ -40,6 +73,11 @@ export default class Todo extends Vue {
   border-radius: 5px;
 }
 
+.todo {
+  width: 100%;
+  display: flex;
+}
+
 .text {
   margin: 0;
   padding: 0;
@@ -50,5 +88,9 @@ export default class Todo extends Vue {
 
 .checkbox {
   margin: 5px 10px;
+}
+
+.editingInput {
+  margin: 0 10px;
 }
 </style>

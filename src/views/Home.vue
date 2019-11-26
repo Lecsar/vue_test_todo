@@ -2,24 +2,27 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <AddInput
-      v-bind:hasTodos="hasTodos"
-      v-bind:checkedAll="checkedAll"
-      v-on:addTodo="addTodo"
-      v-on:toggleCheckedAllTodo="toggleCheckedAllTodo"
+      :hasTodos="hasTodos"
+      :checkedAll="checkedAll"
+      @addTodo="addTodo"
+      @toggleCheckedAllTodo="toggleCheckedAllTodo"
     />
     <Todo
       v-for="todo in todos"
-      v-bind:key="todo.id"
-      v-bind:id="todo.id"
-      v-bind:text="todo.text"
-      v-bind:checked="todo.checked"
-      v-on:toggleTodo="toggleTodo"
-      v-on:deleteTodo="deleteTodo"
+      :key="todo.id"
+      :id="todo.id"
+      :text="todo.text"
+      :checked="todo.checked"
+      :isEditedTodo="todo.id === editedTodoId"
+      @toggleTodo="toggleTodo"
+      @deleteTodo="deleteTodo"
+      @setEditedTodoId="setEditedTodoId"
+      @editTodoText="editTodoText"
     />
     <Filters
       v-if="hasTodos"
-      v-bind:activeFilter="activeFilter"
-      v-on:setFilter="setActiveFilter"
+      :activeFilter="activeFilter"
+      @:setFilter="setActiveFilter"
     />
   </div>
 </template>
@@ -29,7 +32,7 @@ import { mapActions, mapState } from "vuex";
 import AddInput from "@/components/AddInput.vue";
 import Todo from "@/components/Todo";
 import Filters from "@/components/Filters";
-import { ActiveFilterName } from "../store";
+import { ActiveFilterName } from "@/store";
 
 export default {
   name: "home",
@@ -51,6 +54,7 @@ export default {
         }
       }),
     activeFilter: ({ activeFilter }) => activeFilter,
+    editedTodoId: ({ editedTodoId }) => editedTodoId,
     hasTodos: ({ todos }) => !!todos.length,
     checkedAll: ({ todos }) => todos.every(({ checked }) => checked)
   }),
@@ -60,7 +64,9 @@ export default {
       "toggleTodo",
       "toggleCheckedAllTodo",
       "deleteTodo",
-      "setActiveFilter"
+      "setActiveFilter",
+      "setEditedTodoId",
+      "editTodoText"
     ])
   }
 };

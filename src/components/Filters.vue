@@ -1,27 +1,27 @@
 <template>
   <div class="filter-wrapper">
     <span
-      v-bind:class="{
+      :class="{
         filter: true,
         'filter--active': activeFilter === 'All'
       }"
-      v-on:click="setFilter('All')"
+      @click="setFilter('All')"
       >All</span
     >
     <span
-      v-bind:class="{
+      :class="{
         filter: true,
         'filter--active': activeFilter === 'Checked'
       }"
-      v-on:click="setFilter('Checked')"
+      @click="setFilter('Checked')"
       >Checked</span
     >
     <span
-      v-bind:class="{
+      :class="{
         filter: true,
         'filter--active': activeFilter === 'Unchecked'
       }"
-      v-on:click="setFilter('Unchecked')"
+      @click="setFilter('Unchecked')"
       >Unchecked</span
     >
   </div>
@@ -31,7 +31,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class Todo extends Vue {
+export default class Filters extends Vue {
   @Prop() activeFilter!: string;
 
   setFilter(filterName: string) {

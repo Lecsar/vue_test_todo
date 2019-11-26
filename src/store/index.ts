@@ -18,6 +18,12 @@ export enum ActiveFilterName {
 interface State {
   todos: Todo[];
   activeFilter: ActiveFilterName;
+  editedTodoId: number | null;
+}
+
+interface UpdateTodoInfo {
+  todoId: number;
+  setNewTodo: (findedTodo: Todo) => Todo;
 }
 
 let lastId = 0;
@@ -25,8 +31,10 @@ let lastId = 0;
 export default new Vuex.Store<State>({
   state: {
     todos: [],
-    activeFilter: ActiveFilterName.ALL
+    activeFilter: ActiveFilterName.ALL,
+    editedTodoId: null
   },
+
   mutations: {
     addTodo(state, text: string) {
       state.todos.unshift({
@@ -42,10 +50,10 @@ export default new Vuex.Store<State>({
       state.todos = state.todos.filter(({ id }) => deletedId !== id);
     },
 
-    toggleTodo({ todos }, todoId: number) {
+    updateTodo({ todos }, { todoId, setNewTodo }: UpdateTodoInfo) {
       const todoIndex = todos.findIndex(({ id }) => todoId === id);
       const todo = todos[todoIndex];
-      todos.splice(todoIndex, 1, { ...todo, checked: !todo.checked });
+      todos.splice(todoIndex, 1, setNewTodo(todo));
     },
 
     toggleCheckedAllTodo(state, checked: boolean) {
@@ -54,8 +62,13 @@ export default new Vuex.Store<State>({
 
     setActiveFilter(state, filterName: ActiveFilterName) {
       state.activeFilter = filterName;
+    },
+
+    setEditedTodoId(state, editedTodoId: number | null) {
+      state.editedTodoId = editedTodoId;
     }
   },
+
   actions: {
     addTodo(context, newTodoName: string) {
       context.commit("addTodo", newTodoName);
@@ -65,8 +78,18 @@ export default new Vuex.Store<State>({
       context.commit("deleteTodo", deletedId);
     },
 
+    editTodoText(context, { todoId, text }) {
+      context.commit("updateTodo", {
+        todoId,
+        setNewTodo: todo => ({ ...todo, text })
+      } as UpdateTodoInfo);
+    },
+
     toggleTodo(context, todoId: number) {
-      context.commit("toggleTodo", todoId);
+      context.commit("updateTodo", {
+        todoId,
+        setNewTodo: todo => ({ ...todo, checked: !todo.checked })
+      } as UpdateTodoInfo);
     },
 
     toggleCheckedAllTodo(context, checked: boolean) {
@@ -75,7 +98,12 @@ export default new Vuex.Store<State>({
 
     setActiveFilter(context, filterName: ActiveFilterName) {
       context.commit("setActiveFilter", filterName);
+    },
+
+    setEditedTodoId(context, editedTodoId: number | null) {
+      context.commit("setEditedTodoId", editedTodoId);
     }
   },
+
   modules: {}
 });

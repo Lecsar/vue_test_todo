@@ -4,16 +4,16 @@
       <a-checkbox
         class="checkbox"
         v-if="hasTodos"
-        v-bind:checked="checkedAll"
-        v-on:change="toggleCheckedAll"
+        :checked="checkedAll"
+        @change="toggleCheckedAll"
       />
       <a-input
         class="input"
-        v-bind:value="value"
-        v-on:change="$event => setValue($event.target.value)"
-        v-on:pressEnter="addTodo"
+        :value="value"
+        @change="$event => setValue($event.target.value)"
+        @pressEnter="addTodo"
       />
-      <a-button class="clearBtn" v-on:click="clearInput">&#10008;</a-button>
+      <a-button class="clearBtn" @click="clearInput">&#10008;</a-button>
     </div>
   </div>
 </template>
