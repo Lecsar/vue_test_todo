@@ -1,7 +1,11 @@
 import { UserInfo, SuccessAuthResponse } from "@/types";
 import { USERS } from "@/data";
 
-const createToken = () => String(Math.floor(Math.random() * 100000));
+type AuthData = {
+  login?: string;
+  password?: string;
+  token?: string;
+};
 
 class FakeApi {
   private users: UserInfo[];
@@ -10,18 +14,22 @@ class FakeApi {
     this.users = users;
   }
 
-  authorization(login: string, password: string): Promise<SuccessAuthResponse> {
+  authorization(authData: AuthData): Promise<SuccessAuthResponse> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const findedUser = this.users.find(
-          u => u.login === login && u.password === password
-        );
+        let predicate = (user: UserInfo) => false;
+
+        if (authData.token) {
+          predicate = (user: UserInfo) => user.token === authData.token;
+        } else if (authData.login && authData.password) {
+          predicate = ({ login, password }: UserInfo) =>
+            login === authData.login && password === authData.password;
+        }
+
+        const findedUser = this.users.find(predicate);
 
         if (findedUser) {
-          const token = createToken();
-          findedUser.token = token;
           const { password, ...response } = findedUser;
-
           resolve(response);
         } else {
           reject();

@@ -1,8 +1,27 @@
 <template>
   <div id="app">
-    <router-view />
+    <BaseGlobalLoading :isLoading="isGlobalLoading">
+      <router-view />
+    </BaseGlobalLoading>
   </div>
 </template>
+
+<script>
+import { mapState } from "vuex";
+import BaseGlobalLoading from "@/components/BaseGlobalLoading.vue";
+
+export default {
+  name: "App",
+
+  components: {
+    BaseGlobalLoading
+  },
+
+  computed: mapState({
+    isGlobalLoading: s => s.isGlobalLoading
+  })
+};
+</script>
 
 <style lang="less">
 #app {

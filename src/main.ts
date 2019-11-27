@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Checkbox, Input, Button, Form } from "ant-design-vue";
+import { Checkbox, Input, Button, Form, Spin } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import App from "./App.vue";
 import { router } from "./router";
@@ -8,6 +8,7 @@ import { store } from "./store";
 Vue.component(Button.name, Button);
 Vue.component(Input.name, Input);
 Vue.component(Checkbox.name, Checkbox);
+Vue.component(Spin.name, Spin);
 
 Vue.component(Form.name, Form);
 Vue.component(Form.Item.name, Form.Item);

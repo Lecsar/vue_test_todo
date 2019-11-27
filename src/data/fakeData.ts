@@ -6,7 +6,7 @@ export const USERS: UserInfo[] = [
     login: "test",
     password: "test",
     role: Role.USER,
-    token: ""
+    token: "376453526"
   },
 
   {
@@ -14,6 +14,6 @@ export const USERS: UserInfo[] = [
     login: "admin",
     password: "admin",
     role: Role.ADMIN,
-    token: ""
+    token: "1423738612231083"
   }
 ];
