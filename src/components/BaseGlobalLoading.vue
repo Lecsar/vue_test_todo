@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import {} from "vuex";
-
 export default {
   props: {
     isLoading: {
