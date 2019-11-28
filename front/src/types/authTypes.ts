@@ -1,4 +1,4 @@
-import { Role } from ".";
+import { Role } from "../types";
 
 export interface AuthState {
   isDirtyAuth: boolean;
