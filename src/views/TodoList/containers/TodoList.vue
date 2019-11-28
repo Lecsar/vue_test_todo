@@ -40,10 +40,17 @@ import {
   DELETE_TODO,
   SET_ACTIVE_FILTER,
   SET_EDITED_TODO_ID,
-  EDIT_TODO_TEXT
+  EDIT_TODO_TEXT,
+  MUTATE_ADD_TODO,
+  MUTATE_DELETE_TODO,
+  MUTATE_TOGGLE_CHECK_ALL_TODO,
+  MUTATE_SET_ACTIVE_FILTER,
+  MUTATE_SET_EDITED_TODO_ID
 } from "../const";
 
-const { mapState, mapActions } = createNamespacedHelpers("todoList");
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
+  "todoList"
+);
 
 export default {
   name: "todolist",
@@ -74,13 +81,15 @@ export default {
 
   methods: {
     ...mapActions({
-      addTodo: ADD_TODO,
       toggleTodo: TOGGLE_TODO,
-      toggleCheckedAllTodo: TOGGLE_CHECKED_ALL_TODO,
-      deleteTodo: DELETE_TODO,
-      setActiveFilter: SET_ACTIVE_FILTER,
-      setEditedTodoId: SET_EDITED_TODO_ID,
       editTodoText: EDIT_TODO_TEXT
+    }),
+    ...mapMutations({
+      addTodo: MUTATE_ADD_TODO,
+      deleteTodo: MUTATE_DELETE_TODO,
+      toggleCheckedAllTodo: MUTATE_TOGGLE_CHECK_ALL_TODO,
+      setActiveFilter: MUTATE_SET_ACTIVE_FILTER,
+      setEditedTodoId: MUTATE_SET_EDITED_TODO_ID
     })
   }
 };

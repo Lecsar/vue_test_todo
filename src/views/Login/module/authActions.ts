@@ -56,14 +56,3 @@ export const authActions: ActionTree<AuthState, RootState> = {
     }
   }
 };
-
-export const authMutations: MutationTree<AuthState> = {
-  [MUTATE_SET_USER](state, { login, role }) {
-    state.login = login;
-    state.role = role;
-  },
-
-  [MUTATE_SET_DIRTY_AUTH](state) {
-    state.isDirtyAuth = true;
-  }
-};
