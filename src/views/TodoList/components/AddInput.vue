@@ -12,6 +12,7 @@
         :value="value"
         @change="$event => setValue($event.target.value)"
         @pressEnter="addTodo"
+        @keydown.esc="clearInput"
       />
       <a-button class="clearBtn" @click="clearInput">&#10008;</a-button>
     </div>
@@ -25,12 +26,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class AddInput extends Vue {
   @Prop() private checkedAll!: boolean;
   @Prop() private hasTodos!: boolean;
-  private value: string;
-
-  constructor() {
-    super();
-    this.value = "";
-  }
+  private value = "";
 
   setValue(newValue: string) {
     this.value = newValue;
@@ -41,8 +37,12 @@ export default class AddInput extends Vue {
   }
 
   addTodo() {
-    this.$emit("addTodo", this.value);
-    this.clearInput();
+    const trimmedValue = this.value.trim();
+
+    if (trimmedValue) {
+      this.$emit("addTodo", this.value);
+      this.clearInput();
+    }
   }
 
   toggleCheckedAll() {

@@ -42,7 +42,14 @@ export default class Todo extends Vue {
   }
 
   editTodoText(text: string) {
-    this.$emit("editTodoText", { todoId: this.id, text });
+    const trimmedText = text.trim();
+
+    if (trimmedText) {
+      this.$emit("editTodoText", { todoId: this.id, text: trimmedText });
+    } else {
+      this.deleteTodo(this.id);
+    }
+
     this.throwOffTodoId();
   }
 
