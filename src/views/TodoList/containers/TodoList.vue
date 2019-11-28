@@ -33,16 +33,27 @@ import AddInput from "../components/AddInput";
 import Todo from "../components/Todo";
 import Filters from "../components/Filters";
 import { ActiveFilterName } from "@/types";
+import {
+  ADD_TODO,
+  TOGGLE_TODO,
+  TOGGLE_CHECKED_ALL_TODO,
+  DELETE_TODO,
+  SET_ACTIVE_FILTER,
+  SET_EDITED_TODO_ID,
+  EDIT_TODO_TEXT
+} from "../const";
 
 const { mapState, mapActions } = createNamespacedHelpers("todoList");
 
 export default {
   name: "todolist",
+
   components: {
     AddInput,
     Todo,
     Filters
   },
+
   computed: mapState({
     todos: ({ todos, activeFilter }) =>
       todos.filter(({ checked }) => {
@@ -60,16 +71,17 @@ export default {
     hasTodos: ({ todos }) => !!todos.length,
     checkedAll: ({ todos }) => todos.every(({ checked }) => checked)
   }),
+
   methods: {
-    ...mapActions([
-      "addTodo",
-      "toggleTodo",
-      "toggleCheckedAllTodo",
-      "deleteTodo",
-      "setActiveFilter",
-      "setEditedTodoId",
-      "editTodoText"
-    ])
+    ...mapActions({
+      addTodo: ADD_TODO,
+      toggleTodo: TOGGLE_TODO,
+      toggleCheckedAllTodo: TOGGLE_CHECKED_ALL_TODO,
+      deleteTodo: DELETE_TODO,
+      setActiveFilter: SET_ACTIVE_FILTER,
+      setEditedTodoId: SET_EDITED_TODO_ID,
+      editTodoText: EDIT_TODO_TEXT
+    })
   }
 };
 </script>

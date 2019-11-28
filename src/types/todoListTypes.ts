@@ -10,8 +10,13 @@ export enum ActiveFilterName {
   UNCHECKED = "Unchecked"
 }
 
-export interface State {
+export interface TodoState {
   todos: Todo[];
   activeFilter: ActiveFilterName;
   editedTodoId: number | null;
+}
+
+export interface UpdateTodoInfo {
+  todoId: number;
+  setNewTodo: (findedTodo: Todo) => Todo;
 }
