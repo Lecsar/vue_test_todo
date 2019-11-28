@@ -3,7 +3,7 @@ import { router } from "@/router";
 import { AuthState } from "@/types";
 import { RootState, SET_IS_GLOBAL_LOADING } from "@/store";
 import {
-  fakeApi,
+  api,
   setTokenInLocalStorage,
   getTokenFromLocalStorage
 } from "@/helpers";
@@ -17,10 +17,11 @@ import {
 export const authActions: ActionTree<AuthState, RootState> = {
   async [MANUAL_LOGIN]({ commit }, { login, password, redirectUrl }) {
     try {
-      const { role, token } = await fakeApi.authorization({
+      const { data } = await api.authorization({
         login,
         password
       });
+      const { role, token } = data;
       commit(MUTATE_SET_USER, { login, role });
 
       router.push(redirectUrl);
@@ -36,9 +37,10 @@ export const authActions: ActionTree<AuthState, RootState> = {
 
     try {
       const token = getTokenFromLocalStorage();
-      const { role, login } = await fakeApi.authorization({
+      const { data } = await api.authorization({
         token
       });
+      const { role, login } = data;
 
       commit(MUTATE_SET_USER, { login, role });
 

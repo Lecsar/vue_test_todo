@@ -1,2 +1,2 @@
-export * from "./fakeApi";
+export * from "./api";
 export * from "./localStorage";

@@ -25,5 +25,7 @@ export const store = new Vuex.Store<RootState>({
   modules: {
     todoList: todoListStore,
     auth: authStore
-  }
+  },
+
+  strict: true
 });
