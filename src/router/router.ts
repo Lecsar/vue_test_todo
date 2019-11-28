@@ -2,9 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import { store } from "@/store";
 import { AuthState } from "@/types";
-
-import TodoList from "TodoList/containers/TodoList.vue";
-import Login from "Login/containers/Login.vue";
+import { AUTO_LOGIN } from "Login/const";
 
 Vue.use(VueRouter);
 
@@ -15,12 +13,16 @@ const routes: RouteConfig[] = [
   {
     path: TODO_LIST_PAGE_URL,
     name: "todolist",
-    component: TodoList
+    component: () =>
+      import(
+        /* webpackChunkName: "todolist" */ "TodoList/containers/TodoList.vue"
+      )
   },
   {
     path: LOGIN_PAGE_URL,
     name: "login",
-    component: Login,
+    component: () =>
+      import(/* webpackChunkName: "login" */ "Login/containers/Login.vue"),
     meta: {
       public: true,
       onlyWhenLoggedOut: true
@@ -62,7 +64,7 @@ router.beforeEach(async (to, from, next) => {
       return next();
     } else if (needAuth) {
       // попробовать авторизоваться
-      const hasPermission = await store.dispatch("auth/autoLogin");
+      const hasPermission = await store.dispatch(`auth/${AUTO_LOGIN}`);
 
       if (hasPermission) {
         return next();

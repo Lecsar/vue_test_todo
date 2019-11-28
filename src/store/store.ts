@@ -9,13 +9,15 @@ export interface RootState {
   isGlobalLoading: boolean;
 }
 
+export const SET_IS_GLOBAL_LOADING = "SET_IS_GLOBAL_LOADING";
+
 export const store = new Vuex.Store<RootState>({
   state: {
     isGlobalLoading: false
   },
 
   mutations: {
-    setIsGlobalLoading(state, isLoading: boolean) {
+    [SET_IS_GLOBAL_LOADING](state, isLoading: boolean) {
       state.isGlobalLoading = isLoading;
     }
   },

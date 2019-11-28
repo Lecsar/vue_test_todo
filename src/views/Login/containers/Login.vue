@@ -43,6 +43,8 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { TODO_LIST_PAGE_URL } from "@/router";
+import { MANUAL_LOGIN } from "../const";
 
 const { mapState, mapActions } = createNamespacedHelpers("auth");
 
@@ -52,14 +54,18 @@ export default {
   },
 
   methods: {
-    ...mapActions(["manualLogin"]),
+    ...mapActions({ login: MANUAL_LOGIN }),
 
     handleSubmit: function(e) {
       e.preventDefault();
 
+      const redirectUrl = decodeURI(
+        this.$router.history.current.query.redirectFrom || TODO_LIST_PAGE_URL
+      );
+
       this.form.validateFields((err, fields) => {
         if (!err) {
-          this.manualLogin(fields);
+          this.login({ ...fields, redirectUrl });
         }
       });
     }
