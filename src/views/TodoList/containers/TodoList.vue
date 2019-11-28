@@ -45,7 +45,8 @@ import {
   MUTATE_DELETE_TODO,
   MUTATE_TOGGLE_CHECK_ALL_TODO,
   MUTATE_SET_ACTIVE_FILTER,
-  MUTATE_SET_EDITED_TODO_ID
+  MUTATE_SET_EDITED_TODO_ID,
+  GET_TODOS
 } from "../const";
 
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
@@ -81,6 +82,7 @@ export default {
 
   methods: {
     ...mapActions({
+      getTodosFromServer: GET_TODOS,
       toggleTodo: TOGGLE_TODO,
       editTodoText: EDIT_TODO_TEXT
     }),
@@ -91,6 +93,10 @@ export default {
       setActiveFilter: MUTATE_SET_ACTIVE_FILTER,
       setEditedTodoId: MUTATE_SET_EDITED_TODO_ID
     })
+  },
+
+  mounted() {
+    this.getTodosFromServer();
   }
 };
 </script>

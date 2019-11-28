@@ -17,10 +17,7 @@ import {
 export const authActions: ActionTree<AuthState, RootState> = {
   async [MANUAL_LOGIN]({ commit }, { login, password, redirectUrl }) {
     try {
-      const { data } = await api.authorization({
-        login,
-        password
-      });
+      const { data } = await api.authorization(login, password);
       const { role, token } = data;
       commit(MUTATE_SET_USER, { login, role });
 
@@ -37,9 +34,7 @@ export const authActions: ActionTree<AuthState, RootState> = {
 
     try {
       const token = getTokenFromLocalStorage();
-      const { data } = await api.authorization({
-        token
-      });
+      const { data } = await api.autoAuthorization(token);
       const { role, login } = data;
 
       commit(MUTATE_SET_USER, { login, role });

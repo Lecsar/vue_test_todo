@@ -1,17 +1,22 @@
 import { MutationTree } from "vuex";
-import { TodoState, UpdateTodoInfo, ActiveFilterName } from "@/types";
+import { TodoState, UpdateTodoInfo, ActiveFilterName, Todo } from "@/types";
 import {
   MUTATE_ADD_TODO,
   MUTATE_DELETE_TODO,
   MUTATE_UPDATE_TODO,
   MUTATE_TOGGLE_CHECK_ALL_TODO,
   MUTATE_SET_ACTIVE_FILTER,
-  MUTATE_SET_EDITED_TODO_ID
+  MUTATE_SET_EDITED_TODO_ID,
+  MUTATE_SET_TODOS
 } from "../const";
 
 let lastId = 0;
 
 export const todoMutations: MutationTree<TodoState> = {
+  [MUTATE_SET_TODOS](state, todos: Todo[]) {
+    state.todos = todos;
+  },
+
   [MUTATE_ADD_TODO](state, text: string) {
     state.todos.unshift({
       id: lastId,

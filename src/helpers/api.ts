@@ -1,18 +1,9 @@
 import axios, { AxiosInstance } from "axios";
-import { SuccessAuthResponse } from "@/types";
+import { SuccessAuthResponse, Todo } from "@/types";
 
 const client = axios.create({
-  baseURL: "http://localhost:3000/",
-  headers: {
-    "Content-Type": "application/json"
-  }
+  baseURL: "http://localhost:3000/"
 });
-
-type AuthData = {
-  login?: string;
-  password?: string;
-  token?: string;
-};
 
 class Api {
   private client: AxiosInstance;
@@ -21,11 +12,31 @@ class Api {
     this.client = client;
   }
 
-  authorization(authData: AuthData) {
+  getTodos() {
+    return this.client.get<Todo[]>("todos");
+  }
+
+  authorization(login: string, password: string) {
     return this.client.post<SuccessAuthResponse>(
       "auth",
-      JSON.stringify(authData),
-      {}
+      JSON.stringify({ login, password }),
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+  }
+
+  autoAuthorization(token: string) {
+    return this.client.post<SuccessAuthResponse>(
+      "authAuto",
+      JSON.stringify({ token }),
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
     );
   }
 }
