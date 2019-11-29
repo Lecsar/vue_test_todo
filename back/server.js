@@ -15,7 +15,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/todos", protectMiddleware, getTodosResolver);
+app.get("/todos", protectMiddleware, getTodosResolver);
 
 app.post("/auth", authResolver);
 app.post("/authAuto", authAutoResolver);

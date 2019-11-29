@@ -18,4 +18,4 @@ const authAutoResolver = pathToDB => async (req, res) => {
   }
 };
 
-module.exports = authAutoResolver("../db/users.json");
+module.exports = authAutoResolver("db/users.json");

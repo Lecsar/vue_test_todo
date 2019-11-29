@@ -15,7 +15,7 @@ const authResolver = pathToDB => async (req, res) => {
       const { password, ...response } = findedUser;
 
       try {
-        await writeFile(pathToDB);
+        await writeFile(pathToDB, users);
         return res.send(response);
       } catch (writeError) {
         return res.sendStatus(503);
@@ -28,4 +28,4 @@ const authResolver = pathToDB => async (req, res) => {
   }
 };
 
-module.exports = authResolver("../db/users.json");
+module.exports = authResolver("db/users.json");
