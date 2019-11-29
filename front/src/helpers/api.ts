@@ -1,9 +1,33 @@
 import axios, { AxiosInstance } from "axios";
 import { SuccessAuthResponse, Todo } from "@/types";
+import { store } from "@/store";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/"
 });
+
+const requestInterceptor = () => {};
+
+const responseInterceptor = () => {};
+
+client.interceptors.request.use(
+  config => {
+    /* eslint-disable */
+    const { token } = (store.state as any).auth;
+
+    config.headers = {
+      ...config.headers,
+      Authorization: token
+    };
+
+    return config;
+  },
+  error => {
+    console.error(error);
+
+    Promise.reject(error);
+  }
+);
 
 class Api {
   private client: AxiosInstance;

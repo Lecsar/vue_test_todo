@@ -19,7 +19,7 @@ export const authActions: ActionTree<AuthState, RootState> = {
     try {
       const { data } = await api.authorization(login, password);
       const { role, token } = data;
-      commit(MUTATE_SET_USER, { login, role });
+      commit(MUTATE_SET_USER, { login, role, token });
 
       router.push(redirectUrl);
       setTokenInLocalStorage(token);
@@ -37,7 +37,7 @@ export const authActions: ActionTree<AuthState, RootState> = {
       const { data } = await api.autoAuthorization(token);
       const { role, login } = data;
 
-      commit(MUTATE_SET_USER, { login, role });
+      commit(MUTATE_SET_USER, { login, role, token });
 
       return true;
     } catch (error) {
