@@ -5,4 +5,5 @@ export interface AuthState {
   login: string;
   role: Role | null;
   token: string;
+  refreshToken: string;
 }

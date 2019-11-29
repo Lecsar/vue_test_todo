@@ -4,7 +4,7 @@ import { AuthState } from "@/types";
 import { RootState, SET_IS_GLOBAL_LOADING } from "@/store";
 import {
   api,
-  setTokenInLocalStorage,
+  setTokensInLocalStorage,
   getTokenFromLocalStorage
 } from "@/helpers";
 import {
@@ -18,11 +18,11 @@ export const authActions: ActionTree<AuthState, RootState> = {
   async [MANUAL_LOGIN]({ commit }, { login, password, redirectUrl }) {
     try {
       const { data } = await api.authorization(login, password);
-      const { role, token } = data;
+      const { role, token, refreshToken } = data;
       commit(MUTATE_SET_USER, { login, role, token });
 
       router.push(redirectUrl);
-      setTokenInLocalStorage(token);
+      setTokensInLocalStorage(token, refreshToken);
     } catch (error) {
       // eslint-disable-next-line
       console.error("Неверный логин или пароль");

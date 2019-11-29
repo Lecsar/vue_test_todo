@@ -24,10 +24,19 @@ client.interceptors.request.use(
   },
   error => {
     console.error(error);
-
     Promise.reject(error);
   }
 );
+
+client.interceptors.response.use(config => {
+  const { status } = config;
+
+  if (status === 403) {
+    return config;
+  }
+
+  return config;
+});
 
 class Api {
   private client: AxiosInstance;
