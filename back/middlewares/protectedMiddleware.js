@@ -2,11 +2,11 @@ const { readFile } = require("../helpers/workWithFiles");
 
 const protectPath = pathToDB => async (req, res, next) => {
   try {
-    const { Authorization } = req.headers;
+    const { authorization } = req.headers;
 
-    if (Authorization) {
+    if (authorization) {
       const users = await readFile(pathToDB);
-      const findedUser = users.find(u => u.token === Authorization);
+      const findedUser = users.find(u => u.token === authorization);
 
       if (findedUser) {
         next();
@@ -21,4 +21,4 @@ const protectPath = pathToDB => async (req, res, next) => {
   }
 };
 
-module.exports = protectPath("../db/users.json");
+module.exports = protectPath("db/users.json");

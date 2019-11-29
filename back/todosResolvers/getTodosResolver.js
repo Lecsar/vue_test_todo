@@ -9,4 +9,4 @@ const getTodosResolver = pathToDB => async (req, res) => {
   }
 };
 
-module.exports = getTodosResolver("../db/todos.json");
+module.exports = getTodosResolver("db/todos.json");
