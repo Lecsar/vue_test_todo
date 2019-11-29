@@ -1,1 +1,13 @@
-[{"id":10,"login":"test","password":"test","token":"a0066f90-1288-11ea-ae04-8da19eb70c79","role":"User"},{"id":21,"login":"admin","password":"admin","token":"","role":"Admin"}]
+[
+  { "id": 10, "login": "test", "password": "test", "role": "User" },
+  {
+    "id": 21,
+    "login": "admin",
+    "password": "admin",
+    "role": "Admin",
+    "token": "6e446940-128c-11ea-9169-bd110cb3ee31",
+    "refreshToken": "6e446941-128c-11ea-9169-bd110cb3ee31",
+    "timeExpiredToken": 1575020494292,
+    "timeExpiredStartRefreshToken": 1575020494292
+  }
+]

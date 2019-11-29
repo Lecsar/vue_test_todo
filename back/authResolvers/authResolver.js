@@ -12,7 +12,11 @@ const authResolver = pathToDB => async (req, res) => {
 
     if (findedUser) {
       findedUser.token = generateToken();
-      const { password, ...response } = findedUser;
+      findedUser.refreshToken = generateToken();
+      findedUser.timeExpiredToken = Date.now();
+      findedUser.timeExpiredStartRefreshToken = Date.now();
+
+      const { password, timeStartRefreshToken, ...response } = findedUser;
 
       try {
         await writeFile(pathToDB, users);

@@ -3,6 +3,10 @@ const { readFile } = require("../helpers/workWithFiles");
 const authAutoResolver = pathToDB => async (req, res) => {
   const { token } = req.body;
 
+  if (!token) {
+    return res.sendStatus(403);
+  }
+
   try {
     const users = await readFile(pathToDB);
     const findedUser = users.find(u => u.token === token);
